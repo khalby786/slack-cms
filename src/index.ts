@@ -1,4 +1,4 @@
-type SlackCredentials = {
+export type SlackCredentials = {
   sigingSecret: string;
   token: string;
 }

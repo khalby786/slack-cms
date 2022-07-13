@@ -3,12 +3,13 @@
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
-  "files": [
-    "lib/**/*"
-  ],
+	"files": [
+		"lib/**/*"
+	],
 	"scripts": {
+		"test": "tsc && node lib/tests/index.js",
 		"prepare": "npm run build",
-    "prepublishOnly": "npm run lint",
+		"prepublishOnly": "npm run lint",
 		"build": "tsc",
 		"format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
 		"lint": "tslint -p tsconfig.json"
@@ -25,6 +26,8 @@
 	},
 	"homepage": "https://github.com/khalby786/slack-cms#readme",
 	"devDependencies": {
+		"@types/node": "^18.0.3",
+		"dotenv": "^16.0.1",
 		"prettier": "^2.7.1",
 		"tslint": "^6.1.3",
 		"tslint-config-prettier": "^1.18.0",
