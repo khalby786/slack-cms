@@ -57,7 +57,7 @@ export class Slack {
 
 	// trade channel name for channel id
 	// perf issues with this function, but it works
-	async getChannel(channelName: string): Promise<string | undefined> {
+	protected async getChannel(channelName: string): Promise<string | undefined> {
 		try {
 			let channelId: string | undefined;
 
