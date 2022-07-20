@@ -7,9 +7,11 @@ import * as dotenv from "dotenv";
 console.log(__dirname);
 dotenv.config({ debug: true });
 
-let tokens: SlackCredentials = {
-  sigingSecret: process.env.SLACK_SIGNING_SECRET as string,
-  token: process.env.SLACK_TOKEN as string
-}
+// let tokens: SlackCredentials = {
+//   token: process.env.SLACK_TOKEN as string
+// }
 
-console.log(tokens);
+(async () => {
+  const cms = new Slack({ token: process.env.SLACK_TOKEN as string });
+  console.log(await cms.getMessages("#slack-cms-test"));
+})();
