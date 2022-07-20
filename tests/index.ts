@@ -13,5 +13,6 @@ dotenv.config({ debug: true });
 
 (async () => {
   const cms = new Slack({ token: process.env.SLACK_TOKEN as string });
-  console.log(await cms.getMessages("#slack-cms-test"));
+  // console.log(await cms.getMessages("#slack-cms-test"));
+  console.log(await cms.getPosts("C03PH1KLD8T"));
 })();

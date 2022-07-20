@@ -1,6 +1,7 @@
 import { WebClient } from "@slack/web-api";
 import { Message } from "@slack/web-api/dist/response/ConversationsHistoryResponse"; // we need dem types
 import { Channel } from "@slack/web-api/dist/response/ConversationsListResponse";
+import { User } from "@slack/web-api/dist/response/UsersInfoResponse";
 import * as matter from "gray-matter";
 
 // let's talk about this
@@ -8,7 +9,8 @@ import * as matter from "gray-matter";
 // there's supposed to be a `file.isEmpty` property, but it's not there in the types
 // looking at the open PRs and issues, it looks like it won't be fixed anytime soon
 // but hey, it works, I live to serve the Typescript compiler now
-interface GreyMatterFilePatch<I> {
+
+interface GreyMatterBase<I> {
 	data: { [key: string]: any };
 	content: string;
 	excerpt?: string;
@@ -16,7 +18,13 @@ interface GreyMatterFilePatch<I> {
 	language: string;
 	matter: string;
 	stringify(lang: string): string;
+	empty: string;
 	isEmpty: boolean;
+}
+
+interface Post<I> extends GreyMatterBase<I> {
+	unixTimestamp: string;
+	author: User;
 }
 
 export type SlackCredentials = {
@@ -36,7 +44,15 @@ export class Slack {
 	}
 
 	protected isEmpty(obj: object) {
-    return Object.keys(obj).length === 0;
+		return Object.keys(obj).length === 0;
+	}
+
+	protected async getUser(userId: string): Promise<User | undefined> {
+		const user = await this.web.users.info({
+			user: userId
+		});
+
+		return user.user;
 	}
 
 	// trade channel name for channel id
@@ -57,6 +73,8 @@ export class Slack {
 				}
 			}
 
+			console.log(channelId);
+
 			return channelId;
 		} catch (error) {
 			console.error(error);
@@ -64,7 +82,7 @@ export class Slack {
 	}
 
 	// get all messages from the specified channel using @slack/bolt
-	async getMessages(channelIdentifier: string): Promise<any> {
+	async getPosts(channelIdentifier: string): Promise<any> {
 		let channelId: string | undefined = "";
 
 		if (channelIdentifier.startsWith("#")) {
@@ -79,12 +97,16 @@ export class Slack {
 		});
 
 		let messagesArray: Message[] | undefined = messages.messages;
-		let posts: any[] = [];
+		let posts: Post<string>[] = [];
 
 		for (let message of messagesArray as Message[]) {
-			let post = matter(message.text as string) as GreyMatterFilePatch<string>;
+			// console.log(message);
+			let post = matter(message.text as string) as GreyMatterBase<string>;
 			if (post.isEmpty !== true && this.isEmpty(post.data) !== true) {
-				posts.push(post);	
+				// get user details as author stuff
+				let user = await this.getUser(message.user as string);
+
+				posts.push({ ...post, unixTimestamp: message.ts as string, author: user as User });
 			}
 		}
 
