@@ -1,8 +1,10 @@
-import { WebClient } from "@slack/web-api";
+import { WebClient, ErrorCode } from "@slack/web-api";
+import { Reaction } from "@slack/web-api/dist/response/ChannelsHistoryResponse";
 import { Message } from "@slack/web-api/dist/response/ConversationsHistoryResponse"; // we need dem types
 import { Channel } from "@slack/web-api/dist/response/ConversationsListResponse";
 import { User } from "@slack/web-api/dist/response/UsersInfoResponse";
 import * as matter from "gray-matter";
+import { stringify } from "querystring";
 
 // let's talk about this
 // https://www.npmjs.com/package/gray-matter#returned-object
@@ -11,35 +13,43 @@ import * as matter from "gray-matter";
 // but hey, it works, I live to serve the Typescript compiler now
 
 interface GreyMatterBase<I> {
-	data: { [key: string]: any };
+	data: {
+		[key: string]: any;
+	};
 	content: string;
 	excerpt?: string;
 	orig: Buffer | I;
 	language: string;
 	matter: string;
+	empty: string;
+	isEmpty: boolean;
 	stringify(lang: string): string;
+}
+
+interface Post<I> {
+	data: {
+		content: string;
+		excerpt?: string;
+		timestamp: string;
+		author: User;
+		reactions: Reaction[] | undefined;
+		[key: string]: any;
+	};
+	orig: Buffer | I;
+	language: string;
+	matter: string;
 	empty: string;
 	isEmpty: boolean;
 }
 
-interface Post<I> extends GreyMatterBase<I> {
-	unixTimestamp: string;
-	author: User;
-}
-
-export type SlackCredentials = {
-	token: string;
-};
-
 export class Slack {
-	slackTokens: SlackCredentials;
+	slackToken: string;
 	web: WebClient;
-	protected isBreak: boolean = false;
 
-	constructor(slackTokens: SlackCredentials) {
-		this.slackTokens = slackTokens;
+	constructor(slackToken: string) {
+		this.slackToken = slackToken;
 
-		const web = new WebClient(this.slackTokens.token);
+		const web = new WebClient(this.slackToken);
 		this.web = web;
 	}
 
@@ -47,9 +57,9 @@ export class Slack {
 		return Object.keys(obj).length === 0;
 	}
 
-	protected async getUser(userId: string): Promise<User | undefined> {
+	async getUser(userId: string): Promise<User | undefined> {
 		const user = await this.web.users.info({
-			user: userId
+			user: userId,
 		});
 
 		return user.user;
@@ -91,22 +101,34 @@ export class Slack {
 			channelId = channelIdentifier;
 		}
 
-		const messages = await this.web.conversations.history({
-			channel: channelId as string,
-			limit: 200,
-		});
-
-		let messagesArray: Message[] | undefined = messages.messages;
 		let posts: Post<string>[] = [];
 
-		for (let message of messagesArray as Message[]) {
-			// console.log(message);
-			let post = matter(message.text as string) as GreyMatterBase<string>;
-			if (post.isEmpty !== true && this.isEmpty(post.data) !== true) {
-				// get user details as author stuff
-				let user = await this.getUser(message.user as string);
+		for await (const page of this.web.paginate("conversations.history", {
+			channel: channelId,
+			limit: 200,
+		})) {
+			for (const message of page.messages as Message[]) {
+				const post = matter(message.text as string, { excerpt: true }) as GreyMatterBase<string>;
+				if (post.isEmpty !== true && this.isEmpty(post.data) !== true) {
+					// get user details as author stuff
+					const user = await this.getUser(message.user as string);
 
-				posts.push({ ...post, unixTimestamp: message.ts as string, author: user as User });
+					posts.push({
+						data: {
+							...post.data,
+							content: post?.content,
+							excerpt: post?.excerpt as string,
+							author: user as User,
+							timestamp: message.ts as string,
+							reactions: message.reactions,
+						},
+						orig: post.orig,
+						language: post.language,
+						matter: post.matter,
+						empty: post.empty,
+						isEmpty: post.isEmpty,
+					});
+				}
 			}
 		}
 
