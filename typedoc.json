@@ -1,0 +1,16 @@
+{
+	"$schema": "https://typedoc.org/schema.json",
+	"entryPoints": ["src/index.ts", "src/helpers/parse.ts", "src/interfaces/*.ts"],
+	"out": "docs",
+	"navigation": true,
+	"readme": "./README.md",
+	"plugin": ["@mxssfd/typedoc-theme"],
+	"theme": "my-theme",
+	"customCss": "./docs.css",
+	"hideGenerator": true,
+	"searchInComments": true,
+	"includeVersion": true,
+	"navigationLinks": {
+		"GitHub": "https://github.com/khalby786/slack-cms"
+	}
+}

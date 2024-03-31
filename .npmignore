@@ -1,0 +1,13 @@
+src
+docs
+example
+tests
+tsconfig.json
+tslint.json
+typedoc.json
+docs.css
+
+.github
+.prettierc
+.gitignore
+.env

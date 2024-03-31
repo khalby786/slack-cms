@@ -2,7 +2,7 @@ import { User } from "@slack/web-api/dist/response/UsersInfoResponse";
 import { Attachment, Reaction } from "@slack/web-api/dist/response/ChannelsHistoryResponse";
 import { FileElement, Message } from "@slack/web-api/dist/response/ConversationsHistoryResponse";
 
-export default interface Post<I> {
+export interface Post {
 	frontMatter: {
 		[key: string]: any;
 		matter: string;
@@ -14,6 +14,6 @@ export default interface Post<I> {
 	files?: FileElement[] | undefined;
 	timestamp: string;
 	author: User;
-	reactions: Reaction[] | undefined;
+	reactions?: Reaction[] | undefined;
 	comments?: Message[] | undefined;
 }

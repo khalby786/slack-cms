@@ -6,10 +6,9 @@ import * as dotenv from "dotenv";
 dotenv.config({ debug: true });
 
 const cms = new SlackCMS(process.env.SLACK_TOKEN as string, {
-  allowEmpty: false,
-  limit: 1
+  allowEmptyMetadata: true,
 });
 
-cms.getPosts("C03PH1KLD8T").then((posts) => {
-  console.log(posts, { depth: null });
+cms.getPosts("C05B6DBN802").then((posts) => {
+	console.log(posts);
 });

@@ -1,11 +1,13 @@
 {
-  "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "declaration": true,
-    "outDir": "./lib",
-    "strict": true
-  },
-  "include": ["src", "tests"],
-  "exclude": ["node_modules", "**/__tests__/*"],
+	"compilerOptions": {
+		"target": "es6",
+		"module": "commonjs",
+		"declaration": true,
+		"outDir": "./lib",
+		"strict": true,
+		"esModuleInterop": true,
+    "sourceMap": true,
+	},
+	"include": ["src", "tests"],
+	"exclude": ["node_modules", "**/__tests__/*"],
 }

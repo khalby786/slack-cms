@@ -4,7 +4,7 @@
 // looking at the open PRs and issues, it looks like it won't be fixed anytime soon
 // but hey, it works, I live to serve the Typescript compiler now
 
-export default interface GreyMatterBase<I> {
+export interface GreyMatterBase<I> {
 	/** The object created by parsing front-matter */
 	data: {
 		[key: string]: any;
