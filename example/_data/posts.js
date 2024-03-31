@@ -20,7 +20,7 @@ const cms = new SlackCMS(process.env.SLACK_TOKEN, {
 });
 
 module.exports = async function () {
-	let data = await cms.getPosts("C05B6DBN802");
+	let data = await cms.posts("C05B6DBN802");
 	let posts = [];
 
 	// if post.attachments.from_url is present, it means the attachment is a post from another channel and we should add it to the post content

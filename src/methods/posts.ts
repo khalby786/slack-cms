@@ -16,7 +16,7 @@ interface Comment extends Message {
 	author?: User | undefined;
 }
 
-async function getPosts(web: WebClient, channelIdentifier: string, options: Options): Promise<Post[]> {
+async function posts(web: WebClient, channelIdentifier: string, options: Options): Promise<Post[]> {
 	let channelId: string | undefined = "";
 	if (channelIdentifier.startsWith("#")) {
 		channelId = await getChannel(web, channelIdentifier.substring(1));
@@ -153,4 +153,4 @@ async function getPosts(web: WebClient, channelIdentifier: string, options: Opti
 	}
 }
 
-export default getPosts;
+export default posts;

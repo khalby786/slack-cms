@@ -1,9 +1,10 @@
 import { WebClient } from "@slack/web-api";
 
 import { Options } from "./interfaces/Options";
-
-import getPosts from "./methods/getPosts";
 import { Post } from "./interfaces/Post";
+
+import posts from "./methods/posts";
+import { parse } from "./helpers/parse";
 
 /**
  * Create a new instance of SlackCMS
@@ -36,7 +37,9 @@ export class SlackCMS {
 	 * @param channelIdentifier The channel name or ID to get posts from
 	 * @returns An array of Post objects
 	 */
-	async getPosts(channelIdentifier: string): Promise<Post[]> {
-		return await getPosts(this.web, channelIdentifier, this.options);
+	async posts(channelIdentifier: string): Promise<Post[]> {
+		return await posts(this.web, channelIdentifier, this.options);
 	}
 }
+
+export { parse };
