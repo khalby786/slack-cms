@@ -5,6 +5,7 @@
 	"private": true,
 	"scripts": {
 		"build": "npx @11ty/eleventy",
+		"build:example": "npx @11ty/eleventy",
 		"build-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/",
 		"start": "npx @11ty/eleventy --serve --quiet",
 		"debug": "DEBUG=Eleventy* npx @11ty/eleventy",
