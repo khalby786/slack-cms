@@ -9,7 +9,6 @@
 	"scripts": {
 		"test": "tsc && node lib/tests/index.js",
 		"prepare": "npm run build",
-		"prepublishOnly": "npm run lint",
 		"build": "tsc",
 		"format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
 		"lint": "tslint -p tsconfig.json",

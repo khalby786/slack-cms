@@ -15,7 +15,7 @@ async function getChannel(web: WebClient, channelName: string): Promise<string |
 			types: "public_channel,private_channel",
 			limit: 200,
 		})) {
-			for (let channel of page.channels as Channel[]) {
+			for (const channel of page.channels as Channel[]) {
 				if (channel.name === channelName) {
 					channelId = channel.id;
 					break pagination;

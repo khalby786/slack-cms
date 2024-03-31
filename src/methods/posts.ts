@@ -67,7 +67,7 @@ async function posts(web: WebClient, channelIdentifier: string, options: Options
 				let addendumContent: string = "\n";
 				let postFiles: FileElement[] | undefined = [];
 				let postAttachments: Attachment[] | undefined = [];
-				let comments: Comment[]| undefined = [];
+				const comments: Comment[]| undefined = [];
 
 				// message thread replies
 				if (message.reply_count && message.reply_count > 0) {
@@ -144,10 +144,10 @@ async function posts(web: WebClient, channelIdentifier: string, options: Options
 		return options.limit ? posts.slice(-options.limit) : posts;
 	} catch (error: any) {
 		if (error.code === ErrorCode.PlatformError) {
-			console.log(error.data);
+			;
 		} else {
 			// Some other error, oh no!
-			console.log("Well, that was unexpected.");
+			;
 		}
 		return [];
 	}
