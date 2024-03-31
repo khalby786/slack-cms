@@ -1,5 +1,7 @@
 # slack-cms
 
+[![npm](https://nodei.co/npm/slack-cms.png)](https://npmjs.com/package/slack-cms)
+
 What if you could run [a blog from a Slack channel](https://slack-cms.netlify.app/)?
 
 This package lets you fetch messages from a particular Slack channel as "posts" and includes all the data you will need to display them. It comes with batteries included, so you can render Slack data easily.
