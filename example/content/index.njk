@@ -1,0 +1,29 @@
+---
+layout: layouts/home.njk
+eleventyNavigation:
+  key: Home
+  order: 1
+---
+
+{% for post in posts %}
+  <div class="post">
+    <h2 class="post-author">@{{ post.author.name }}</h2>
+    <h5 class="post-date">Posted on {{ post.timestamp | timestamp }}</h5>
+    <p class="post-content">{{ post.content | safe }}</p>
+    {% if post.extraContent %}
+      <blockquote class="post-extraContent">{{ post.extraContent | parse | safe }}</blockquote>
+    {% endif %}
+		<br />
+    {% if post.comments.length > 0 %}
+      <details>
+        <summary>{{ post.comments.length }} comments</summary>
+        {% for comment in post.comments %}
+          <div class="comment">
+            <h5 class="comment-author">@{{ comment.author.name }}</h5>
+            <p class="comment-content">{{ comment.text | parse | safe }}</p>
+          </div>
+        {% endfor %}
+      </details>
+    {% endif %}
+  </div>
+{% endfor %}
