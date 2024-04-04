@@ -11,7 +11,7 @@ const pluginDrafts = require("./eleventy.config.drafts.js");
 const pluginImages = require("./eleventy.config.images.js");
 
 const { WebClient } = require("@slack/web-api");
-const { parse } = require("../lib/src/helpers/parse.js");
+const { parse } = require("slack-cms"); 
 const dotenv = require("dotenv");
 dotenv.config({ path: ".env" });
 
