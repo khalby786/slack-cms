@@ -13,7 +13,7 @@
 		"format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
 		"lint": "tslint -p tsconfig.json",
 		"docs": "typedoc",
-		"build:example": "cd example && npm install && npm run build"
+		"build:example": "npm run build && cd example && npm install && npm run build"
 	},
 	"repository": {
 		"type": "git",
