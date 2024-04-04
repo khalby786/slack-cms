@@ -1,4 +1,4 @@
-const { SlackCMS } = require("../../lib/src/index.js");
+const { SlackCMS } = require("slack-cms");
 
 const cms = new SlackCMS(process.env.SLACK_TOKEN, {
 	allowEmptyMetadata: true,
