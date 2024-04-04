@@ -1,8 +1,8 @@
 {
 	"name": "slack-cms",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "What if you could use a Slack channel as the CMS for your blog?",
-	"main": "index.js",
+	"main": "lib/index.js",
 	"files": [
 		"lib/**/*"
 	],
