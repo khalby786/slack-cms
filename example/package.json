@@ -42,6 +42,6 @@
 	"dependencies": {
 		"@slack/web-api": "^7.0.2",
 		"dotenv": "^16.4.5",
-		"slack-cms": "^1.0.2"
+		"slack-cms": "^1.0.3"
 	}
 }

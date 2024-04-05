@@ -48,6 +48,17 @@ export async function parse(
 		},
 	}
 ) {
+	mrdkwn = mrdkwn.trim();
+
+	// bold
+	mrdkwn = mrdkwn.replace(/\*(.*?)\*/g, "<b>$1</b>");
+
+	// strike
+	mrdkwn = mrdkwn.replace(/\~(.*?)\~/g, "<strike>$1</strike>");
+
+	// italics
+	mrdkwn = mrdkwn.replace(/\_(.*?)\_/g, "<i>$1</i>");
+
 	// default emojis
 	mrdkwn = emoji.replace_colons(mrdkwn);
 
@@ -67,17 +78,6 @@ export async function parse(
 		}
 	}
 
-	mrdkwn = mrdkwn.trim();
-
-	// bold
-	mrdkwn = mrdkwn.replace(/\*(.*?)\*/g, "<b>$1</b>");
-
-	// strike
-	mrdkwn = mrdkwn.replace(/\~(.*?)\~/g, "<strike>$1</strike>");
-
-	// italics
-	mrdkwn = mrdkwn.replace(/\_(.*?)\_/g, "<i>$1</i>");
-
 	// use slack-markdown to convert markdown to html
 	mrdkwn = toHTML(mrdkwn, options);
 
@@ -96,6 +96,6 @@ export async function parse(
 
 	// replace \n with <br>
 	mrdkwn = mrdkwn.replace(/(\r\n|\r|\n)/g, "<br>");
-	
+
 	return mrdkwn;
 }

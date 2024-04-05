@@ -13,6 +13,6 @@ cms.posts("C05B6DBN802").then((posts) => {
 	console.log(posts);
 });
 
-parse("*hello*").then((post) => {
-  console.log(post);
-});
+// parse("*hello*").then((post) => {
+//   console.log(post);
+// });
