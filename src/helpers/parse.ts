@@ -75,6 +75,9 @@ export async function parse(
 	// strike
 	mrdkwn = mrdkwn.replace(/\~(.*?)\~/g, "<strike>$1</strike>");
 
+	// italics
+	mrdkwn = mrdkwn.replace(/\_(.*?)\_/g, "<i>$1</i>");
+
 	// use slack-markdown to convert markdown to html
 	mrdkwn = toHTML(mrdkwn, options);
 
