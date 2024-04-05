@@ -2,7 +2,7 @@
 
 [![npm](https://nodei.co/npm/slack-cms.png)](https://npmjs.com/package/slack-cms)
 
-What if you could run [a blog from a Slack channel](https://slack-cms.netlify.app/)?
+What if you could run [a blog from a Slack channel](https://slack-cms.vercel.app/)?
 
 This package lets you fetch messages from a particular Slack channel as "posts" and includes all the data you will need to display them. It comes with batteries included, so you can render Slack data easily.
 
@@ -178,7 +178,7 @@ You can opt users out of being included in posts by adding their user IDs to `op
 
 You can find the full documentation [here](https://khalby786.github.io/slack-cms/).
 
-Additionally, check out the [example](https://slack-cms.netlify.app/) of a blog running on [Hack Club](https://hackclub.com/)'s #happenings channel. You can find the source code in the [example](https://github.com/khalby786/slack-cms/tree/main/example) directory.
+Additionally, check out the [example](https://slack-cms.vercel.app/) of a blog running on [Hack Club](https://hackclub.com/)'s #happenings channel. You can find the source code in the [example](https://github.com/khalby786/slack-cms/tree/main/example) directory.
 
 ## License
 
